@@ -32,11 +32,44 @@ var mkanbanBoard = (function () {
             'board'
         ], created: function () {
             console.log("[board]: created");
+
             if (!this.board.lists) {
                 this.board.lists = [];
             }
+
+            // init dragula configuration
+            dragula(
+                {
+                    isContainer: function (el) {
+                        return el.classList.contains('dragula-container');
+                    },
+                    moves: function (el, source, handle, sibling) {
+                        return (false);
+                    },
+                    accepts: function (el, source, handle, sibling) {
+                        return el.classList.contains('dragula-item');
+                    }
+                }
+            );
             this.$nextTick(() => this.$refs.listName.focus());
+        }, mounted: function() {
+            this.updateDragulaElements();
+        }, computed: {
+            listCount: function() {
+                return(this.board.lists.length);
+            }
+        }, watched: {
+            listCount: function(v) {
+                this.updateDragulaElements();
+            }
         }, methods: {
+            updateDragulaElements: function() {
+                console.log("[board]: updating dragula elements");
+                for (var i = 0, el = [], listElements = document.getElementsByClassName('dragula-container'); i < listElements.length; i++) {
+                    el.push(listElements[i]);
+                }
+                dragula(el.length > 1 ? el : [el]);
+            },
             addList: function () {
                 let list = {
                     id: Math.random(),

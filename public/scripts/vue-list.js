@@ -18,7 +18,7 @@ var mkanbanList = (function () {
                             </span>
                         </a>
                     </header>
-                    <div class="card-content">
+                    <div class="card-content dragula-container">
                         <card v-for="card in list.cards" v-bind:card="card"></card>
                     </div>
                     <div v-if="newCard" class="card-content">

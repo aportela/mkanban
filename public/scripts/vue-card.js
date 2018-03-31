@@ -6,7 +6,7 @@ var mkanbanList = (function () {
 
     var template = function () {
         return `
-            <div class="card mk-card">
+            <div class="card mk-card dragula-item">
                 <div class="card-content">
                     <p class="card-header-title">{{ card.title }}</p>
                     <div class="content">
