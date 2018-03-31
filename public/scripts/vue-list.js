@@ -19,10 +19,11 @@ var mkanbanList = (function () {
                         </a>
                     </header>
                     <div class="card-content">
+                        <card v-for="card in list.cards" v-bind:card="card"></card>
                     </div>
                     <div v-if="newCard" class="card-content">
                         <div class="control">
-                            <input v-on:keyup.enter="addCard();" class="input" type="text" placeholder="type card title" v-model="newCardTitle">
+                            <input v-on:keyup.enter="addCard();" ref="cardTitle" class="input" type="text" placeholder="type card title" v-model="newCardTitle">
                         </div>
                     </div>
                     <footer class="card-footer">
@@ -35,7 +36,6 @@ var mkanbanList = (function () {
         `;
     };
 
-    /* signIn component */
     var module = Vue.component('list', {
         template: template(),
         data: function () {
@@ -55,6 +55,7 @@ var mkanbanList = (function () {
             addCard: function () {
                 if (!this.newCard) {
                     this.newCard = true;
+                    this.$nextTick(() => this.$refs.cardTitle.focus());
                 } else {
                     let card = {
                         id: Math.random(),
@@ -74,4 +75,3 @@ var mkanbanList = (function () {
 
     return (module);
 })();
-

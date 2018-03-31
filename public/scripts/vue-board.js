@@ -53,4 +53,3 @@ var mkanbanBoard = (function () {
 
     return (module);
 })();
-

@@ -11,19 +11,40 @@ const app = new Vue({
                             id: Math.random(),
                             name: "TODO",
                             created: new Date(),
-                            cards: []
+                            cards: [
+                                {
+                                    id: Math.random(),
+                                    title: "drag & drop support",
+                                    description: "KISS: find an existent javascript module/library to manage this (complex?) events",
+                                    created: new Date()
+                                }
+                            ]
                         },
                         {
                             id: Math.random(),
                             name: "IN PROGRESS",
                             created: new Date(),
-                            cards: []
+                            cards: [
+                                {
+                                    id: Math.random(),
+                                    title: "card (vuejs) component",
+                                    description: null,
+                                    created: new Date()
+                                }
+                            ]
                         },
                         {
                             id: Math.random(),
                             name: "DONE",
                             created: new Date(),
-                            cards: []
+                            cards: [
+                                {
+                                    id: Math.random(),
+                                    title: "main skeleton",
+                                    description: null,
+                                    created: new Date()
+                                }
+                            ]
                         }
                     ]
                 }
