@@ -6,7 +6,7 @@ var mkanbanList = (function () {
 
     var template = function () {
         return `
-            <div class="column is-3">
+            <div class="column">
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title has-text-centered">
@@ -18,7 +18,7 @@ var mkanbanList = (function () {
                             </span>
                         </a>
                     </header>
-                    <div class="card-content dragula-container">
+                    <div class="card-content dragula-container" v-bind:data-list="list.id">
                         <card v-for="card in list.cards" v-bind:card="card"></card>
                     </div>
                     <div v-if="newCard" class="card-content">

@@ -52,23 +52,25 @@ var mkanbanBoard = (function () {
                 }
             );
             this.$nextTick(() => this.$refs.listName.focus());
-        }, mounted: function() {
+        }, mounted: function () {
             this.updateDragulaElements();
         }, computed: {
-            listCount: function() {
-                return(this.board.lists.length);
+            listCount: function () {
+                return (this.board.lists.length);
             }
-        }, watched: {
-            listCount: function(v) {
+        }, watch: {
+            listCount: function (v) {
                 this.updateDragulaElements();
             }
         }, methods: {
-            updateDragulaElements: function() {
+            updateDragulaElements: function () {
                 console.log("[board]: updating dragula elements");
                 for (var i = 0, el = [], listElements = document.getElementsByClassName('dragula-container'); i < listElements.length; i++) {
                     el.push(listElements[i]);
                 }
-                dragula(el.length > 1 ? el : [el]);
+                dragula({ containers: el.length > 1 ? el : [el] }).on("drop", function (element, target, source, sibling) {
+                    bus.$emit("dragulaDrop", element.dataset.card, source.dataset.list, target.dataset.list);
+                });
             },
             addList: function () {
                 let list = {
