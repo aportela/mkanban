@@ -7,6 +7,7 @@ var mkanbanBoard = (function () {
     var template = function () {
         return `
             <div class="columns is-unselectable">
+                <list v-for="list in board.lists" :key="list.id" v-bind:list="list"></list>
                 <div class="column is-2">
                     <div class="field has-addons">
                         <div class="control">
@@ -36,15 +37,14 @@ var mkanbanBoard = (function () {
             }
         }, methods: {
             addList: function () {
-
-                let newList = {
+                let list = {
                     id: Math.random(),
                     name: this.newListName,
                     created: new Date(),
                     cards: []
                 }
-                this.board.lists.push(newList);
-                console.log("[board]: add list " + newList.name);
+                this.board.lists.push(list);
+                console.log("[board]: add list " + list.name);
                 this.newListName = null;
             }
         }
