@@ -19,7 +19,7 @@ var mkanbanList = (function () {
                         </a>
                     </header>
                     <div class="card-content dragula-container" v-bind:data-list="list.id">
-                        <card v-for="card in list.cards" v-bind:card="card"></card>
+                        <card v-for="card in list.cards" v-bind:card="card" v-bind:key="card.id"></card>
                     </div>
                     <div v-if="newCard" class="card-content">
                         <div class="control">

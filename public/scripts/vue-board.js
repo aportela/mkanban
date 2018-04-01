@@ -7,7 +7,7 @@ var mkanbanBoard = (function () {
     var template = function () {
         return `
             <div class="columns is-unselectable">
-                <list v-for="list in board.lists" :key="list.id" v-bind:list="list"></list>
+                <list v-for="list in board.lists" :key="list.id" v-bind:list="list" v-bind:key="list.id"></list>
                 <div class="column is-2">
                     <div class="field has-addons">
                         <div class="control">
@@ -28,7 +28,8 @@ var mkanbanBoard = (function () {
             return ({
                 newListName: null,
                 drake: null,
-                isDragging: false
+                isDragging: false,
+                dragFrom: null,
             });
         }, props: [
             'board'
@@ -54,82 +55,42 @@ var mkanbanBoard = (function () {
                 }
             );
             var self = this;
+
+            this.drake.on("drag", function (element, source) {
+                console.log("[board]: event dragulaDrag");
+                var index = [].indexOf.call(element.parentNode.children, element);
+                self.dragFrom = index;
+            });
             this.drake.on("drop", function (element, target, source, sibling) {
-                if (target != source) {
-                    console.clear();
-                    console.log(self.drake.dragging);
-                    console.log("[board]: event dragulaDrop");
+                console.log("[board]: event dragulaDrop");
+                var index = [].indexOf.call(element.parentNode.children, element);
 
-                    // card dropped from list list (index)
-                    const sourceListIndex = self.board.lists.findIndex(list => list.id == source.dataset.list);
-                    // index (on source list) of dropped card
-                    const sourceCardIdx = self.board.lists[sourceListIndex].cards.findIndex(card => card.id == element.dataset.card);
-                    // card dropped to list list (index)
-                    const destListIndex = self.board.lists.findIndex(list => list.id == target.dataset.list);
 
-                    // destination list dom object
-                    var destinationListElement = Array.from(document.getElementsByClassName('dragula-container')).find(dstEl => dstEl.dataset.list == target.dataset.list);
-                    // index (on destination list dom) of dropped card
-                    var destinationCardElementIndex = Array.from(destinationListElement.getElementsByClassName('dragula-item')).findIndex(dstEl => dstEl.dataset.card == element.dataset.card);
+                //self.board.lists[1].cards.splice(index, 0, self.board.lists[1].cards.splice(self.dragFrom, 1)[0]);
 
-                    const card = self.board.lists[sourceListIndex].cards[sourceCardIdx];
-
-                    console.group("Before update dataset");
-                    self.board.lists.forEach(function (list, lindex, larray) {
-                        console.group("List: " + list.name);
-                        list.cards.forEach(function (card, cindex, carray) {
-                            console.log("Card: " + card.title);
-                        });
-                        console.groupEnd();
+                console.group("[board]: Before drop");
+                self.board.lists.forEach(function (list, lindex, larray) {
+                    console.group("List: " + list.name);
+                    list.cards.forEach(function (card, cindex, carray) {
+                        console.log("Card: " + card.title);
                     });
                     console.groupEnd();
+                });
+                console.groupEnd();
 
-                    console.log("###################################################");
+                const sourceListIndex = self.board.lists.findIndex(list => list.id == source.dataset.list);
+                const destListIndex = self.board.lists.findIndex(list => list.id == target.dataset.list);
+                self.board.lists[destListIndex].cards.splice(index, 0, self.board.lists[sourceListIndex].cards.splice(self.dragFrom, 1)[0]);
 
-                    console.group("Drag&Drop card");
-                    console.group("Drag");
-                    console.log("From list: %s (index: %d)", self.board.lists[sourceListIndex].name, sourceListIndex);
-                    console.log("From card index %d", sourceCardIdx);
-                    console.groupEnd();
-
-                    console.group("Drop");
-                    console.log("To list: %s (index: %d)", self.board.lists[destListIndex].name, destListIndex);
-                    console.log("To card index %d", destinationCardElementIndex);
-                    console.groupEnd();
-                    console.groupEnd();
-
-                    console.log("###################################################");
-
-
-                    self.board.lists[sourceListIndex].cards.splice(sourceCardIdx, 1);
-
-                    console.group("After remove card on source");
-                    self.board.lists.forEach(function (list, lindex, larray) {
-                        console.group("List: " + list.name);
-                        list.cards.forEach(function (card, cindex, carray) {
-                            console.log("Card: " + card.title);
-                        });
-                        console.groupEnd();
+                console.group("[board]: After drop");
+                self.board.lists.forEach(function (list, lindex, larray) {
+                    console.group("List: " + list.name);
+                    list.cards.forEach(function (card, cindex, carray) {
+                        console.log("Card: " + card.title);
                     });
                     console.groupEnd();
-
-                    console.log("###################################################");
-
-                    self.board.lists[destListIndex].cards.splice(destinationCardElementIndex, 0, card);
-
-                    console.group("Final list dataset");
-                    self.board.lists.forEach(function (list, lindex, larray) {
-                        console.group("List: " + list.name);
-                        list.cards.forEach(function (card, cindex, carray) {
-                            console.log("Card: " + card.title);
-                        });
-                        console.groupEnd();
-                    });
-                    console.groupEnd();
-                } else {
-                    console.log("Reorder on same list: todo");
-                    self.drake.cancel(true);
-                }
+                });
+                console.groupEnd();
             });
 
             this.$nextTick(() => this.$refs.listName.focus());
