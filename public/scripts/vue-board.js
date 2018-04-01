@@ -122,6 +122,7 @@ var mkanbanBoard = (function () {
                 this.board.lists.push(list);
                 console.log("[board]: add list " + list.name);
                 this.newListName = null;
+                this.$nextTick(() => this.$refs.listName.focus());
             }
         }
     });
