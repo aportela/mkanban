@@ -29,7 +29,7 @@ var mkanbanBoard = (function () {
                 newListName: null,
                 drake: null,
                 isDragging: false,
-                dragFrom: null,
+                dropData: {},
             });
         }, props: [
             'board'
@@ -58,15 +58,11 @@ var mkanbanBoard = (function () {
 
             this.drake.on("drag", function (element, source) {
                 console.log("[board]: event dragulaDrag");
-                var index = [].indexOf.call(element.parentNode.children, element);
-                self.dragFrom = index;
+                self.dropData.fromCardIdx = [].indexOf.call(element.parentNode.children, element);
             });
             this.drake.on("drop", function (element, target, source, sibling) {
                 console.log("[board]: event dragulaDrop");
-                var index = [].indexOf.call(element.parentNode.children, element);
-
-
-                //self.board.lists[1].cards.splice(index, 0, self.board.lists[1].cards.splice(self.dragFrom, 1)[0]);
+                self.dropData.toCardIdx  = [].indexOf.call(element.parentNode.children, element);
 
                 console.group("[board]: Before drop");
                 self.board.lists.forEach(function (list, lindex, larray) {
@@ -80,7 +76,14 @@ var mkanbanBoard = (function () {
 
                 const sourceListIndex = self.board.lists.findIndex(list => list.id == source.dataset.list);
                 const destListIndex = self.board.lists.findIndex(list => list.id == target.dataset.list);
-                self.board.lists[destListIndex].cards.splice(index, 0, self.board.lists[sourceListIndex].cards.splice(self.dragFrom, 1)[0]);
+                self.board.lists[destListIndex].cards.splice( // add card
+                    self.dropData.toCardIdx, // on destination list dropped card index
+                    0,
+                    self.board.lists[sourceListIndex].cards.splice( // remove card
+                        self.dropData.fromCardIdx, // from source list on dragged card index
+                        1
+                    )[0]
+                );
 
                 console.group("[board]: After drop");
                 self.board.lists.forEach(function (list, lindex, larray) {
