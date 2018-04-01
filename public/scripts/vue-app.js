@@ -35,6 +35,12 @@ const app = new Vue({
                                     title: "card (vuejs) component",
                                     description: null,
                                     created: new Date()
+                                },
+                                {
+                                    id: Math.random(),
+                                    title: "fix drag&drop reorder & clone",
+                                    description: "drag & drop is failing when reorder elements",
+                                    created: new Date()
                                 }
                             ]
                         },
