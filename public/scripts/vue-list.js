@@ -50,8 +50,7 @@ var mkanbanList = (function () {
             if (!this.list.cards) {
                 this.list.cards = [];
             }
-        },
-        methods: {
+        }, methods: {
             addCard: function () {
                 if (!this.newCard) {
                     this.newCard = true;

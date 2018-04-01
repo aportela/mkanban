@@ -26,7 +26,9 @@ var mkanbanBoard = (function () {
         template: template(),
         data: function () {
             return ({
-                newListName: null
+                newListName: null,
+                drake: null,
+                isDragging: false
             });
         }, props: [
             'board'
@@ -37,50 +39,44 @@ var mkanbanBoard = (function () {
                 this.board.lists = [];
             }
 
-            // init dragula configuration
-            dragula(
+            this.drake = dragula(
                 {
+                    revertOnSpill: true,
                     isContainer: function (el) {
                         return el.classList.contains('dragula-container');
                     },
                     moves: function (el, source, handle, sibling) {
-                        return (false);
-                    },
-                    accepts: function (el, source, handle, sibling) {
                         return el.classList.contains('dragula-item');
+                    },
+                    accepts: function (el, target, source, sibling) {
+                        return target.classList.contains('dragula-container');
                     }
                 }
             );
-
             var self = this;
-            // event (dragula): card dropped
-            bus.$on("dragulaDrop", function (card, fromList, toList) {
-                console.log("[app]: event dragulaDrop")
-                var obj = null;
-                var sourceListIdx = -1;
-                var sourceCardIdx = -1;
-                var destCardIdx = 0;
-                // get card object from source list
-                for (var i = 0, notFound = true; i < self.board.lists.length && notFound; i++) {
-                    if (self.board.lists[i].id == fromList) { // source list
-                        sourceListIdx = i;
-                        for (var j = 0; j < self.board.lists[i].cards.length && notFound; j++) {
-                            if (self.board.lists[i].cards[j].id == card) { // card on source list
-                                sourceCardIdx = j;
-                                obj = self.board.lists[i].cards[j];
-                                notFound = false;
-                            }
-                        }
-                    }
-                }
-                if (obj) {
-                    for (var i = 0, notFound = true; i < self.board.lists.length && notFound; i++) {
-                        if (self.board.lists[i].id == toList) { // source list
-                            self.board.lists[i].cards.splice(destCardIdx, 0, obj);
-                            notFound = false;
-                        }
-                    }
-                    self.board.lists[sourceListIdx].cards.splice(sourceCardIdx, 1);
+            this.drake.on("drop", function (element, target, source, sibling) {
+                console.log("[board]: event dragulaDrop")
+                // card dropped from list list (index)
+                const sourceListIndex = self.board.lists.findIndex(list => list.id == source.dataset.list);
+                // index (on source list) of dropped card
+                const sourceCardIdx = self.board.lists[sourceListIndex].cards.findIndex(card => card.id == element.dataset.card);
+                // card dropped to list list (index)
+                const destListIndex = self.board.lists.findIndex(list => list.id == target.dataset.list);
+
+                // destination list dom object
+                var destinationListElement = Array.from(document.getElementsByClassName('dragula-container')).find(dstEl => dstEl.dataset.list == target.dataset.list);
+                // index (on destination list dom) of dropped card
+                var destinationCardElementIndex = Array.from(destinationListElement.getElementsByClassName('dragula-item')).findIndex(dstEl => dstEl.dataset.card == element.dataset.card);
+
+                const card = self.board.lists[sourceListIndex].cards[sourceCardIdx];
+                // copy card (at index position) of destination dataset
+                self.board.lists[destListIndex].cards.splice(destinationCardElementIndex, 0, card);
+                if (sourceListIndex != destListIndex) {
+                    // remove card from original dataset (card moved from one list to another)
+                    self.board.lists[sourceListIndex].cards.splice(sourceCardIdx, 1);
+                } else {
+                    // remove card from original dataset (card moved in same list)
+                    self.board.lists[sourceListIndex].cards.splice(destinationCardElementIndex, 0, card);
                 }
             });
 
@@ -97,13 +93,8 @@ var mkanbanBoard = (function () {
             }
         }, methods: {
             updateDragulaElements: function () {
-                console.log("[board]: updating dragula elements");
-                for (var i = 0, el = [], listElements = document.getElementsByClassName('dragula-container'); i < listElements.length; i++) {
-                    el.push(listElements[i]);
-                }
-                dragula({ containers: el.length > 1 ? el : [el] }).on("drop", function (element, target, source, sibling) {
-                    bus.$emit("dragulaDrop", element.dataset.card, source.dataset.list, target.dataset.list);
-                });
+                console.log("[board]: updating dragula drag containers");
+                this.drake.containers = Array.from(document.getElementsByClassName('dragula-container'));
             },
             addList: function () {
                 let list = {
