@@ -1,12 +1,12 @@
 /**
  * card component
  */
-var mkanbanList = (function () {
+var mkanbanCard = (function () {
     "use strict";
 
     var template = function () {
         return `
-            <div class="card mk-card dragula-item" v-bind:data-card="card.id">
+            <div class="card mk-card dragula-item" v-bind:data-card="card.id" v-on:click.prevent="showDetails();">
                 <div class="card-content">
                     <p class="card-header-title">{{ card.title }}</p>
                     <div class="content">
@@ -28,6 +28,10 @@ var mkanbanList = (function () {
             'card'
         ], created: function () {
             console.log("[card]: created");
+        }, methods: {
+            showDetails: function () {
+                console.log("[card]: show details (" + this.card.id + ")");
+            }
         }
     });
 
