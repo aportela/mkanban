@@ -38,12 +38,12 @@ var mkanbanCardDetails = (function () {
 
                         <div class="field">
                             <label class="label">Tags</label>
-                            <p>
-                            <span class="tag is-danger">php</span>
-                            <span class="tag is-primary">devel</span>
-                            <span class="tag is-link">urgent</span>
-                            <span class="tag is-info">backend</span>
-                            </p>
+                            <div class="tags">
+                                <span class="tag is-danger">php</span>
+                                <span class="tag is-primary">devel</span>
+                                <span class="tag is-link">urgent</span>
+                                <span class="tag is-info">backend</span>
+                            </div>
                         </div>
 
                         <div class="field">
