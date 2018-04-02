@@ -24,7 +24,7 @@ var mkanbanList = (function () {
                     <div v-if="showAddCardForm" class="card-content">
                         <div class="field">
                             <div class="control">
-                                <textarea v-on:keyup.enter="saveNewCard();" v-on:keyup.escape="cancelNewCard();" ref="cardTitle" class="textarea" rows="2" type="text" placeholder="type card title" v-model="newCardTitle"></textarea>
+                                <input v-on:keyup.enter="saveNewCard();" v-on:keyup.escape="cancelNewCard();" ref="cardTitle" class="input" rows="2" type="text" placeholder="type card title" v-model="newCardTitle">
                             </div>
                         </div>
                         <div class="field is-grouped">
