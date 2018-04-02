@@ -6,7 +6,7 @@ var mkanbanBoard = (function () {
 
     var template = function () {
         return `
-            <div class="columns is-unselectable">
+            <div class="columns is-unselectable is-mobile is-multiline">
                 <list v-for="list in board.lists" :key="list.id" v-bind:list="list" v-bind:key="list.id"></list>
                 <div class="column is-2">
                     <div class="field has-addons">

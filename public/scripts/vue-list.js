@@ -6,8 +6,8 @@ var mkanbanList = (function () {
 
     var template = function () {
         return `
-            <div class="column">
-                <div class="card">
+            <div class="column is-narrow">
+                <div class="card mk-list-container">
                     <header class="card-header">
                         <p class="card-header-title has-text-centered">
                             {{ list.name }}
@@ -23,7 +23,7 @@ var mkanbanList = (function () {
                     </div>
                     <div v-if="newCard" class="card-content">
                         <div class="control">
-                            <input v-on:keyup.enter="addCard();" ref="cardTitle" class="input" type="text" placeholder="type card title" v-model="newCardTitle">
+                            <textarea v-on:keyup.enter="addCard();" ref="cardTitle" class="textarea" rows="2" type="text" placeholder="type card title" v-model="newCardTitle"></textarea>
                         </div>
                     </div>
                     <footer class="card-footer">

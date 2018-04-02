@@ -2,3 +2,8 @@
     margin-bottom: 1.5rem !important;
     cursor: pointer;
 }
+
+.mk-list-container
+{
+    width: 300px;
+}
