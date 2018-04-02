@@ -37,6 +37,16 @@ var mkanbanCardDetails = (function () {
                         </div>
 
                         <div class="field">
+                            <label class="label">Tags</label>
+                            <p>
+                            <span class="tag is-danger">php</span>
+                            <span class="tag is-primary">devel</span>
+                            <span class="tag is-link">urgent</span>
+                            <span class="tag is-info">backend</span>
+                            </p>
+                        </div>
+
+                        <div class="field">
                             <label class="label"> <i class="fas fa-paperclip"></i> Attachments</label>
                             <span v-on:click.prevent="addAttachment = true;" v-if="! addAttachment" class="mk-cursor-pointer">Add</span>
                         </div>
@@ -46,14 +56,30 @@ var mkanbanCardDetails = (function () {
                         <div class="field">
                             <label class="label">Activity</label>
                             <div class="control">
-                                <textarea class="textarea" type="text" placeholder="Write Comment" rows="2" v-model="newCommentBody"></textarea>
+                                <textarea class="textarea" ref="newCommentBody" type="text" placeholder="Write Comment" rows="2" v-model="newCommentBody"></textarea>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                            <button class="button is-link" v-bind:disabled="! newCommentBody">Comment</button>
+                            <button class="button is-link" v-on:click.prevent="addComment();" v-bind:disabled="! newCommentBody">Comment</button>
                             </div>
                         </div>
+
+                        <ul>
+                            <article class="media" v-for="message in activityMessages" v-bind:key="message.id">
+                                <div class="media-left">
+                                    <figure class="image is-32x32">
+                                        <img src="https://bulma.io/images/placeholders/32x32.png" alt="Image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+                                        {{ message.body }}
+                                        <p class="is-size-7">{{ message.date }}</p>
+                                    </div>
+                                </div>
+                            </article
+                        <ul>
 
                     </section>
                     <footer class="modal-card-foot">
@@ -72,19 +98,34 @@ var mkanbanCardDetails = (function () {
                 editDescription: false,
                 description: null,
                 addAttachment: false,
-                newCommentBody: null
+                newCommentBody: null,
+                activityMessages: [
+                    {
+                        id: Math.random(),
+                        date: new Date().toString(),
+                        body: 'card created by foobar'
+                    }
+                ]
             });
         }, props: [
             'card'
         ], created: function () {
             console.log("[card-details]: created");
         }, watch: {
-            editDescription: function(v) {
+            editDescription: function (v) {
                 if (v) {
                     this.$nextTick(() => this.$refs.description.focus());
                 }
             }
         }, methods: {
+            addComment: function () {
+                this.activityMessages.splice(0, 0, {
+                    date: new Date().toString(),
+                    body: this.newCommentBody
+                });
+                this.newCommentBody = null;
+                this.$nextTick(() => this.$refs.newCommentBody.focus());
+            },
             close: function () {
                 bus.$emit("closeCardDetails");
             }
