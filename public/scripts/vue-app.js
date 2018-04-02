@@ -21,7 +21,9 @@ const app = new Vue({
                                     id: Math.random(),
                                     title: "drag & drop support",
                                     description: "KISS: find an existent javascript module/library to manage this (complex?) events",
-                                    created: new Date()
+                                    created: new Date(),
+                                    attachmentCount: 0,
+                                    commentCount: 2
                                 }
                             ]
                         },
@@ -34,13 +36,17 @@ const app = new Vue({
                                     id: Math.random(),
                                     title: "card (vuejs) component",
                                     description: null,
-                                    created: new Date()
+                                    created: new Date(),
+                                    attachmentCount: 1,
+                                    commentCount: 0
                                 },
                                 {
                                     id: Math.random(),
                                     title: "fix drag&drop reorder & clone",
                                     description: "drag & drop is failing when reorder elements",
-                                    created: new Date()
+                                    created: new Date(),
+                                    attachmentCount: 2,
+                                    commentCount: 1
                                 }
                             ]
                         },
@@ -53,7 +59,9 @@ const app = new Vue({
                                     id: Math.random(),
                                     title: "main skeleton",
                                     description: null,
-                                    created: new Date()
+                                    created: new Date(),
+                                    attachmentCount: 0,
+                                    commentCount: 5
                                 }
                             ]
                         }

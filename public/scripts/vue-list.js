@@ -18,7 +18,7 @@ var mkanbanList = (function () {
                             </span>
                         </a>
                     </header>
-                    <div class="card-content dragula-container" v-bind:data-list="list.id">
+                    <div class="card-content dragula-container mk-list-content" v-bind:data-list="list.id">
                         <card v-for="card in list.cards" v-bind:card="card" v-bind:key="card.id"></card>
                     </div>
                     <div v-if="showAddCardForm" class="card-content">
@@ -68,7 +68,9 @@ var mkanbanList = (function () {
                     id: Math.random(),
                     title: this.newCardTitle,
                     description: 'this is the long-text description of the card: ' + this.newCardTitle,
-                    created: new Date()
+                    created: new Date(),
+                    attachmentCount: Math.floor(Math.random() * 5) + 1,
+                    commentCount: Math.floor(Math.random() * 10) + 1,
                 };
 
                 this.list.cards.push(card);
