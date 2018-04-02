@@ -28,7 +28,7 @@ var mkanbanList = (function () {
                     </div>
                     <footer class="card-footer">
                         <p class="card-footer-item">
-                            <a v-on:click.prevent="addCard();"><i class="fa fa-plus-circle"></i> Add card</a>
+                            <a v-on:click.prevent="addCard();"><i class="fa fa-plus"></i> Add card</a>
                         </p>
                     </footer>
                 </div>
