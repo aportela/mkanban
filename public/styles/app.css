@@ -7,3 +7,8 @@
 {
     width: 300px;
 }
+
+.mk-cursor-pointer
+{
+    cursor: pointer;
+}
