@@ -31,6 +31,7 @@ var mkanbanCard = (function () {
         }, methods: {
             showDetails: function () {
                 console.log("[card]: show details (" + this.card.id + ")");
+                bus.$emit("showCardDetails");
             }
         }
     });

@@ -6,18 +6,21 @@ var mkanbanBoard = (function () {
 
     var template = function () {
         return `
-            <div class="columns is-unselectable is-mobile is-multiline">
-                <list v-for="list in board.lists" :key="list.id" v-bind:list="list" v-bind:key="list.id"></list>
-                <div class="column is-2">
-                    <div class="field has-addons">
-                        <div class="control">
-                            <input v-on:keyup.enter="addList();" ref="listName" class="input" type="text" placeholder="Add list" v-model="newListName">
-                        </div>
-                        <div class="control">
-                            <a v-on:click.prevent="addList();" v-bind:disabled="! newListName" class="button is-info">Save</a>
+            <div>
+                <div class="columns is-unselectable is-mobile is-multiline">
+                    <list v-for="list in board.lists" :key="list.id" v-bind:list="list" v-bind:key="list.id"></list>
+                    <div class="column is-2">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input v-on:keyup.enter="addList();" ref="listName" class="input" type="text" placeholder="Add list" v-model="newListName">
+                            </div>
+                            <div class="control">
+                                <a v-on:click.prevent="addList();" v-bind:disabled="! newListName" class="button is-info">Save</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <card-details v-if="popup" v-bind:card="{ title: 'TODO: use real card data' }"></card-details>
             </div>
         `;
     };
@@ -30,6 +33,7 @@ var mkanbanBoard = (function () {
                 drake: null,
                 isDragging: false,
                 dropData: {},
+                popup: false
             });
         }, props: [
             'board'
@@ -39,6 +43,16 @@ var mkanbanBoard = (function () {
             if (!this.board.lists) {
                 this.board.lists = [];
             }
+
+            var self = this;
+            bus.$on("showCardDetails", function () {
+                console.log("[board]: showCardDetails event received");
+                self.popup = true;
+            });
+            bus.$on("closeCardDetails", function () {
+                console.log("[board]: closeCardDetails event received");
+                self.popup = false;
+            });
 
             this.drake = dragula(
                 {
@@ -62,7 +76,7 @@ var mkanbanBoard = (function () {
             });
             this.drake.on("drop", function (element, target, source, sibling) {
                 console.log("[board]: event dragulaDrop");
-                self.dropData.toCardIdx  = [].indexOf.call(element.parentNode.children, element);
+                self.dropData.toCardIdx = [].indexOf.call(element.parentNode.children, element);
 
                 console.group("[board]: Before drop");
                 self.board.lists.forEach(function (list, lindex, larray) {
