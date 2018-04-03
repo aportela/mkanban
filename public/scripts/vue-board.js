@@ -8,7 +8,7 @@ var mkanbanBoard = (function () {
         return `
             <div>
                 <div class="columns is-unselectable is-mobile is-multiline">
-                    <list v-for="list in board.lists" :key="list.id" v-bind:list="list" v-bind:key="list.id"></list>
+                    <list v-for="list in board.lists" v-bind:list="list" v-bind:key="list.id"></list>
                     <div class="column is-2">
                         <div class="field has-addons">
                             <div class="control">
@@ -29,6 +29,10 @@ var mkanbanBoard = (function () {
         template: template(),
         data: function () {
             return ({
+                board: {
+                    id: null,
+                    lists: []
+                },
                 newListName: null,
                 drake: null,
                 isDragging: false,
@@ -36,13 +40,13 @@ var mkanbanBoard = (function () {
                 popup: false
             });
         }, props: [
-            'board'
+            'boardId'
         ], created: function () {
             console.log("[board]: created");
 
-            if (!this.board.lists) {
-                this.board.lists = [];
-            }
+            this.board.id = this.boardId;
+
+            this.get();
 
             var self = this;
             bus.$on("showCardDetails", function (id) {
@@ -109,19 +113,30 @@ var mkanbanBoard = (function () {
                 });
                 console.groupEnd();
             });
-
             this.$nextTick(() => this.$refs.listName.focus());
         }, mounted: function () {
+
             this.updateDragulaElements();
         }, computed: {
             listCount: function () {
-                return (this.board.lists.length);
+                return (this.board.lists ? this.board.lists.length : 0);
             }
         }, watch: {
             listCount: function (v) {
                 this.updateDragulaElements();
             }
         }, methods: {
+            get: function () {
+                console.log("[board]: loading board (" + this.board.id + ") details");
+                var self = this;
+                mkanbanAPI.board.get({ id: this.board.id }, function (response) {
+                    if (response.ok) {
+                        self.board = response.body.board;
+                    } else {
+                        // TODO
+                    }
+                });
+            },
             updateDragulaElements: function () {
                 console.log("[board]: updating dragula drag containers");
                 this.drake.containers = Array.from(document.getElementsByClassName('dragula-container'));

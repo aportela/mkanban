@@ -1,0 +1,61 @@
+{
+    "board": {
+        "id": "74cd733c-092d-4194-a412-9e52b6552fd6",
+        "name": "default board CAMBIADO",
+        "lists": [
+            {
+                "id": "85c6a79c-376c-11e8-b467-0ed5f89f718b",
+                "name": "TODO",
+                "created": 1310669017,
+                "cards": [
+                    {
+                        "id": "3963cc58-376d-11e8-b467-0ed5f89f718b",
+                        "title": "drag & drop support",
+                        "description": "KISS: find an existent javascript module/library to manage this (complex?) events",
+                        "created": 1310669017,
+                        "attachmentCount": 0,
+                        "commentCount": 2
+                    }
+                ]
+            },
+            {
+                "id": "9a42fbb4-a925-4f61-b414-4334d1146d95",
+                "name": "IN PROGRESS",
+                "created": 1310669017,
+                "cards": [
+                    {
+                        "id": "d514c0b6-8e83-40cf-be54-65539925edce",
+                        "title": "card (vuejs) component",
+                        "description": null,
+                        "created": 1310669017,
+                        "attachmentCount": 1,
+                        "commentCount": 0
+                    },
+                    {
+                        "id": "08baf382-2e22-4cab-9e5b-778ba676daa9",
+                        "title": "fix drag&drop reorder & clone",
+                        "description": "drag & drop is failing when reorder elements",
+                        "created": 1310669017,
+                        "attachmentCount": 2,
+                        "commentCount": 1
+                    }
+                ]
+            },
+            {
+                "id": "431747d3-729e-4439-a48a-a141f0738e80",
+                "name": "DONE",
+                "created": 1310669017,
+                "cards": [
+                    {
+                        "id": "01e095b0-3be9-4860-a29a-9c6e2f51f035",
+                        "title": "main skeleton",
+                        "description": null,
+                        "created": 1310669017,
+                        "attachmentCount": 0,
+                        "commentCount": 5
+                    }
+                ]
+            }
+        ]
+    }
+}

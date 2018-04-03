@@ -75,7 +75,7 @@
 
     <div id="app">
         <div class="section">
-            <board v-bind:board="boards[0]"></board>
+            <board v-if="boards.length > 0" v-bind:boardId="boards[0].id"></board>
         </div>
     </div>
 
@@ -87,12 +87,12 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js" integrity="sha256-ug4bHfqHFAj2B5MESRxbLd3R3wdVMQzug2KHZqFEmFI="
         crossorigin="anonymous"></script>
+    <script src="scripts/api.js"></script>
     <script src="scripts/vue-board.js"></script>
     <script src="scripts/vue-list.js"></script>
     <script src="scripts/vue-card.js"></script>
     <script src="scripts/vue-card-details.js"></script>
     <script src="scripts/vue-app.js"></script>
-    <script src="scripts/api.js"></script>
 
 </body>
 
