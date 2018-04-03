@@ -40,11 +40,11 @@ var mkanbanBoard = (function () {
                 popup: false
             });
         }, props: [
-            'boardId'
+            'id'
         ], created: function () {
             console.log("[board]: created");
 
-            this.board.id = this.boardId;
+            this.board.id = this.id;
 
             this.get();
 
@@ -115,13 +115,16 @@ var mkanbanBoard = (function () {
             });
             this.$nextTick(() => this.$refs.listName.focus());
         }, mounted: function () {
-
             this.updateDragulaElements();
         }, computed: {
             listCount: function () {
                 return (this.board.lists ? this.board.lists.length : 0);
             }
         }, watch: {
+            id: function (v) {
+                this.board.id = v;
+                this.get();
+            },
             listCount: function (v) {
                 this.updateDragulaElements();
             }
