@@ -45,13 +45,13 @@ var mkanbanBoard = (function () {
             }
 
             var self = this;
-            bus.$on("showCardDetails", function () {
+            bus.$on("showCardDetails", function (id) {
                 console.log("[board]: showCardDetails event received");
-                self.popup = true;
+                self.showCardDetails(id);
             });
             bus.$on("closeCardDetails", function () {
                 console.log("[board]: closeCardDetails event received");
-                self.popup = false;
+                self.hideCardDetails();
             });
 
             this.drake = dragula(
@@ -137,6 +137,20 @@ var mkanbanBoard = (function () {
                 console.log("[board]: add list " + list.name);
                 this.newListName = null;
                 this.$nextTick(() => this.$refs.listName.focus());
+            },
+            showCardDetails: function (id) {
+                console.log("[board]: loading card (" + id + ") details");
+                var self = this;
+                mkanbanAPI.card.get({ id: id }, function (response) {
+                    if (response.ok) {
+                        self.popup = true;
+                    } else {
+                        // TODO
+                    }
+                });
+            },
+            hideCardDetails: function () {
+                this.popup = false;
             }
         }
     });
