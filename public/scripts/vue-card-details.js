@@ -83,8 +83,7 @@ var mkanbanCardDetails = (function () {
 
                     </section>
                     <footer class="modal-card-foot">
-                        <button v-on:click.prevent="close();" class="button is-success">Save changes</button>
-                        <button v-on:click.prevent="close();" class="button">Cancel</button>
+                        <button v-on:click.prevent="close();" class="button">Close</button>
                     </footer>
                 </div>
             </div>
