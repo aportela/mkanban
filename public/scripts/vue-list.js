@@ -24,7 +24,7 @@ var mkanbanList = (function () {
                     <div v-if="showAddCardForm" class="card-content">
                         <div class="field">
                             <div class="control" v-bind:class="{ 'is-loading': isAddingNewCard, 'has-icons-right': addError }">
-                                <input v-bind:disabled="isAddingNewCard" v-on:keyup.enter="saveNewCard();" v-on:keyup.escape="cancelNewCard();" ref="cardTitle" class="input" type="text" placeholder="type card title" v-model="newCardTitle">
+                                <input v-bind:disabled="isAddingNewCard" v-on:keyup.enter="saveNewCard();" v-on:keyup.escape="cancelNewCard();" ref="cardTitle" class="input" type="text" placeholder="type card title" v-model.trim="newCardTitle">
                                 <span v-show="addError" class="icon is-small is-right">
                                     <i class="fas fa-exclamation-triangle"></i>
                                 </span>

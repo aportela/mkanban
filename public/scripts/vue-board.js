@@ -12,7 +12,7 @@ var mkanbanBoard = (function () {
                     <div class="column is-2">
                         <div class="field has-addons">
                             <div class="control">
-                                <input v-on:keyup.enter="addList();" ref="listName" class="input" type="text" placeholder="Add list" v-model="newListName">
+                                <input v-on:keyup.enter="addList();" ref="listName" class="input" type="text" placeholder="Add list" v-model.trim="newListName">
                             </div>
                             <div class="control">
                                 <a v-on:click.prevent="addList();" v-bind:disabled="! newListName" class="button is-info">Save</a>

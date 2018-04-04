@@ -32,7 +32,7 @@ var mkanbanTopMenu = (function () {
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-search"></i>
                                     </span>
-                                    <input v-on:keyup.enter="search();" v-model="searchText" ref="search" v-bind:disabled="isSearching" class="input is-rounded" type="text" placeholder="search...">
+                                    <input v-on:keyup.enter="search();" v-model.trim="searchText" ref="search" v-bind:disabled="isSearching" class="input is-rounded" type="text" placeholder="search...">
                                 </div>
                             </div>
                         </div>
