@@ -48,7 +48,23 @@ var mkanbanCardDetails = (function () {
 
                         <div class="field">
                             <label class="label"> <i class="fas fa-paperclip"></i> Attachments</label>
-                            <span v-on:click.prevent="addAttachment = true;" v-if="! addAttachment" class="mk-cursor-pointer">Add</span>
+                            <div v-if="attachments.length > 0">
+                                <div v-for="attachment in attachments" class="is-pulled-left mk-attachment-preview">
+                                    <figure class="image is-96x96">
+                                        <img  v-bind:src="attachment.previewThumbnail">
+                                    </figure>
+                                    <span class="is-size-7">{{ attachment.filename }}<br>{{ attachment.size }}</span>
+                                </div>
+                                <div class="is-clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>
+                                <span class="icon is-large mk-cursor-pointer">
+                                    <i class="fas fa-3x fa-upload"></i>
+                                </span>
+                                <input @change="addAttachment" type="file" accept="image/*" class="is-invisible">
+                            </label>
                         </div>
 
                         <hr>
@@ -61,7 +77,7 @@ var mkanbanCardDetails = (function () {
                         </div>
                         <div class="field">
                             <div class="control">
-                            <button class="button is-link" v-on:click.prevent="addComment();" v-bind:disabled="! newCommentBody">Comment</button>
+                                <button class="button is-link" v-on:click.prevent="addComment();" v-bind:disabled="! newCommentBody">Comment</button>
                             </div>
                         </div>
 
@@ -96,7 +112,6 @@ var mkanbanCardDetails = (function () {
             return ({
                 editDescription: false,
                 description: null,
-                addAttachment: false,
                 newCommentBody: null,
                 activityMessages: [
                     {
@@ -104,7 +119,9 @@ var mkanbanCardDetails = (function () {
                         date: new Date().toString(),
                         body: 'card created by foobar'
                     }
-                ]
+                ],
+                attachedFile: null,
+                attachments: []
             });
         }, props: [
             'card'
@@ -117,6 +134,36 @@ var mkanbanCardDetails = (function () {
                 }
             }
         }, methods: {
+            addAttachment: function (event) {
+                console.log("[card-details]: adding attachment");
+                var self = this;
+
+                // https://jsfiddle.net/mani04/5zyozvx8/
+
+                // Reference to the DOM input element
+                var input = event.target;
+                // Ensure that you have a file before attempting to read it
+                if (input.files && input.files[0]) {
+                    // create a new FileReader to read this image and convert to base64 format
+                    var reader = new FileReader();
+                    // Define a callback function to run, when FileReader finishes its job
+                    var filename = input.files[0].name;
+                    var filesize = input.files[0].size;
+                    reader.onload = (e) => {
+                        // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+                        // Read image as base64 and set to imageData
+                        self.attachments.push(
+                            {
+                                filename: filename,
+                                size: mKanban.utils.formatBytes(filesize),
+                                previewThumbnail: e.target.result
+                            }
+                        );
+                    }
+                    // Start the reader job - read file as a data url (base64 format)
+                    reader.readAsDataURL(input.files[0]);
+                }
+            },
             addComment: function () {
                 this.activityMessages.splice(0, 0, {
                     date: new Date().toString(),

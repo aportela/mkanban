@@ -38,3 +38,10 @@
 {
     height: 8px;
 }
+
+.mk-attachment-preview:not(:last-child)
+{
+    margin-right: 0.5rem;
+    border: 1px solid #eee;
+    padding: 0.5rem;
+}
