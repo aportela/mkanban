@@ -161,6 +161,10 @@ var mkanbanCardDetails = (function () {
                                 previewThumbnail: e.target.result
                             }
                         );
+                        self.activityMessages.splice(0, 0, {
+                            date: new Date().toString(),
+                            body: "new attachment (" + filename + ") by foobar"
+                        });
                     }
                     // Start the reader job - read file as a data url (base64 format)
                     reader.readAsDataURL(input.files[0]);
