@@ -46,7 +46,7 @@ var mkanbanTopMenu = (function () {
                                 </p>
                             </a>
                             <div class="navbar-dropdown">
-                                <a v-for="board in boards" v-on:click.prevent="setBoard(board.id);" class="navbar-item">{{ board.name }}</a>
+                                <a v-for="board in boards" v-bind:key="board.id" v-on:click.prevent="setBoard(board.id);" class="navbar-item">{{ board.name }}</a>
                             </div>
                         </div>
                         <a class="navbar-item is-tab">
@@ -75,9 +75,18 @@ var mkanbanTopMenu = (function () {
         template: template(),
         data: function () {
             return ({
+                isAddingNewBoard: false,
+                addError: false,
+                newBoardName: null
             });
         },
-        props: [ 'boards' ]
+        props: [
+            'boards'
+        ],
+        methods: {
+            setBoard: function(id) {
+            }
+        }
     });
 
     return (module);
