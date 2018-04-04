@@ -25,6 +25,18 @@ var mkanbanTopMenu = (function () {
                     </div>
                 </div>
                 <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <div class="navbar-item">
+                            <div class="field">
+                                <div class="control has-icons-left" v-bind:class="{ 'has-icons-right, is-loading': isSearching }">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input v-on:keyup.enter="search();" v-model="searchText" ref="search" v-bind:disabled="isSearching" class="input is-rounded" type="text" placeholder="search...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="navbar-end">
                         <a class="navbar-item is-tab is-active">
                             <p class="control">
@@ -34,9 +46,7 @@ var mkanbanTopMenu = (function () {
                                 <span>Home</span>
                             </p>
                         </a>
-
                         <div class="navbar-item has-dropdown is-hoverable">
-
                             <a class="navbar-link">
                                 <p class="control">
                                     <span class="icon is-small">
@@ -75,6 +85,8 @@ var mkanbanTopMenu = (function () {
         template: template(),
         data: function () {
             return ({
+                isSearching: false,
+                searchText: null,
                 isAddingNewBoard: false,
                 addError: false,
                 newBoardName: null
@@ -83,8 +95,20 @@ var mkanbanTopMenu = (function () {
         props: [
             'boards'
         ],
+        created: function () {
+            console.log("[topmenu]: created");
+        },
         methods: {
-            setBoard: function(id) {
+            search: function () {
+                console.log("[topmenu]: searching: " + this.searchText);
+                this.isSearching = true;
+                var self = this;
+                setTimeout(function () {
+                    self.isSearching = false;
+                    self.$nextTick(() => self.$refs.search.focus());
+                }, 500);
+            },
+            setBoard: function (id) {
             }
         }
     });
