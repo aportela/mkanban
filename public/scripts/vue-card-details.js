@@ -48,23 +48,22 @@ var mkanbanCardDetails = (function () {
 
                         <div class="field">
                             <label class="label"> <i class="fas fa-paperclip"></i> Attachments</label>
-                            <div v-if="attachments.length > 0">
-                                <div v-for="attachment in attachments" class="is-pulled-left mk-attachment-preview">
-                                    <figure class="image is-96x96">
-                                        <img  v-bind:src="attachment.previewThumbnail">
-                                    </figure>
-                                    <span class="is-size-7">{{ attachment.filename }}<br>{{ attachment.size }}</span>
-                                </div>
-                                <div class="is-clearfix"></div>
+                            <div class="is-pulled-left mk-attachment-preview has-text-centered mk-cursor-pointer" v-on:click.prevent="selectAttachmentFromDisk();">
+                                <figure class="image is-96x96">
+                                    <span class="icon is-large mk-cursor-pointer">
+                                        <i class="fas fa-3x fa-upload"></i>
+                                    </span>
+                                </figure>
+                                <span class="is-size-7">Add<br>attachment</span>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label>
-                                <span class="icon is-large mk-cursor-pointer">
-                                    <i class="fas fa-3x fa-upload"></i>
-                                </span>
-                                <input @change="addAttachment" type="file" accept="image/*" class="is-invisible">
-                            </label>
+                            <div v-for="attachment in attachments" class="is-pulled-left mk-attachment-preview">
+                                <figure class="image is-96x96">
+                                    <img  v-bind:src="attachment.previewThumbnail">
+                                </figure>
+                                <span class="is-size-7">{{ attachment.filename }}<br>{{ attachment.size }}</span>
+                            </div>
+                            <div class="is-clearfix"></div>
+                            <input id="attachmentInput" v-on:change="addAttachment" type="file" accept="image/*" class="is-invisible">
                         </div>
 
                         <hr>
@@ -134,6 +133,9 @@ var mkanbanCardDetails = (function () {
                 }
             }
         }, methods: {
+            selectAttachmentFromDisk: function () {
+                document.getElementById('attachmentInput').click();
+            },
             addAttachment: function (event) {
                 console.log("[card-details]: adding attachment");
                 var self = this;
