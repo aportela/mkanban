@@ -146,7 +146,7 @@ var mkanbanBoard = (function () {
             },
             addList: function () {
                 let list = {
-                    id: Math.random(),
+                    id: mKanban.utils.uuidv4(),
                     name: this.newListName,
                     created: new Date(),
                     cards: []

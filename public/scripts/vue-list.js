@@ -72,7 +72,7 @@ var mkanbanList = (function () {
                 this.isAddingNewCard = true;
                 this.addError = false;
                 let card = {
-                    id: Math.random(),
+                    id: mKanban.utils.uuidv4(),
                     title: this.newCardTitle,
                     description: 'this is the long-text description of the card: ' + this.newCardTitle,
                     created: new Date(),
