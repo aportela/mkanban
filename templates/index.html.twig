@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="has-navbar-fixed-top">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -31,10 +31,10 @@
 <body>
 
     <div id="app">
-        <topmenu v-bind:boards="boards"></topmenu>
-        <div class="section">
-            <board v-if="defaultBoard" v-bind:id="defaultBoard"></board>
-        </div>
+        <transition name="fade">
+            <!-- component matched by the route will render here -->
+            <router-view></router-view>
+        </transition>
     </div>
 
     <script type="text/javascript">
@@ -74,6 +74,8 @@
     <!-- app section -->
     <script src="scripts/mkanban.js"></script>
     <script src="scripts/api.js"></script>
+    <script src="scripts/vue-upgrade.js"></script>
+    <script src="scripts/vue-mkanban-home.js"></script>
     <script src="scripts/vue-topmenu.js"></script>
     <script src="scripts/vue-board.js"></script>
     <script src="scripts/vue-list.js"></script>
