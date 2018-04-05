@@ -40,9 +40,11 @@ var mkanbanUpgrade = (function () {
         data: function () {
             return ({
             });
+        }, created: function () {
+            console.log("[upgrade]: created");
         }, computed: {
-            upgradeAvailable: function() {
-                return(initialState.upgradeAvailable);
+            upgradeAvailable: function () {
+                return (initialState.upgradeAvailable);
             }
         }
     });
