@@ -4,33 +4,33 @@
 const bus = new Vue();
 
 /**
+ * set routes
+ */
+const routes = [
+    { path: '/upgrade', name: 'upgrade', component: mkanbanUpgrade },
+    { path: '/home', name: 'home', component: mkanbanHome }
+];
+
+/**
+ * init vue router component
+ */
+const router = new VueRouter({
+    routes
+});
+
+/**
  * main app component
  */
 const app = new Vue({
-    data: function () {
-        return ({
-            defaultBoard: null,
-            boards: []
-        });
-    }, created: function () {
+    router,
+    created: function () {
         console.log("[app]: created");
-        var self = this;
-        mkanbanAPI.board.search(function (response) {
-            if (response.ok) {
-                self.boards = response.body.boards;
-                if (self.boards && self.boards.length > 0) {
-                    self.defaultBoard = self.boards[0].id;
-                }
-                console.log("[app]: " + self.boards.length + " boards found");
-            } else {
-                // TODO
-                console.log("[app]: error loading boards");
-            }
-        })
-    },
-    methods: {
-        setBoard: function (id) {
-            this.defaultBoard = id;
+        if (!initialState.upgradeAvailable) {
+            console.log("[app] redirect to app home");
+            this.$router.push({ name: 'home' });
+        } else {
+            console.log("[app] upgrade found");
+            this.$router.push({ name: 'upgrade' });
         }
     }
 }).$mount('#app');
