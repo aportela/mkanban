@@ -15,6 +15,36 @@ var mkanbanCardDetails = (function () {
                     </header>
                     <section class="modal-card-body">
 
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field-label is-normal">
+                                    <label class="label">Start</label>
+                                </div>
+                                <div class="field">
+                                    <p class="control is-expanded has-icons-left">
+                                        <input class="input" type="date" placeholder="start date">
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="field-label is-normal">
+                                    <label class="label">End</label>
+                                </div>
+                                <div class="field">
+                                    <p class="control is-expanded has-icons-left has-icons-right">
+                                    <input class="input is-success" type="date" placeholder="end date" value="05/04/2018">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                    <span class="icon is-small is-right">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="field">
                             <label class="label">Description</label>
                             <div v-if="! editDescription">
@@ -80,21 +110,19 @@ var mkanbanCardDetails = (function () {
                             </div>
                         </div>
 
-                        <ul>
-                            <article class="media" v-for="message in activityMessages" v-bind:key="message.id">
-                                <div class="media-left">
-                                    <figure class="image is-32x32">
-                                        <img src="https://bulma.io/images/placeholders/32x32.png" alt="Image">
-                                    </figure>
+                        <article class="media" v-for="message in activityMessages" v-bind:key="message.id">
+                            <div class="media-left">
+                                <figure class="image is-32x32">
+                                    <img src="https://bulma.io/images/placeholders/32x32.png" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    {{ message.body }}
+                                    <p class="is-size-7">{{ message.date }}</p>
                                 </div>
-                                <div class="media-content">
-                                    <div class="content">
-                                        {{ message.body }}
-                                        <p class="is-size-7">{{ message.date }}</p>
-                                    </div>
-                                </div>
-                            </article
-                        <ul>
+                            </div>
+                        </article>
 
                     </section>
                     <footer class="modal-card-foot">
