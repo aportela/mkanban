@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- prevent favicon request (https://stackoverflow.com/a/13416784) -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <title>mkanban (yes, another trello clone)</title>
+    {% if settings.localVendorAssets %}
+        {% if settings.production %}
+    <link rel="stylesheet" href="vendor/bulma-0.6.2/css/bulma.min.css" integrity="sha256-2k1KVsNPRXxZOsXQ8aqcZ9GOOwmJTMoOB5o5Qp1d6/s=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="vendor/dragula-3.7.2/dragula.min.css" integrity="sha256-iVhQxXOykHeL03K08zkxBGxDCLCuzRGGiTYf2FL6mLY=" crossorigin="anonymous" />
+        {% else %}
+    <link rel="stylesheet" href="vendor/bulma-0.6.2/css/bulma.css" integrity="sha256-Ll4Z8mX5+0pGybXIES6J8YjUZUBFcQsJfS00wbXdbG8=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="vendor/dragula-3.7.2/dragula.css" integrity="sha256-EYSmiSz2daAX5Xq+m8lxGFf+qWABUgdCPUvU5X0vpI4=" crossorigin="anonymous" />
+        {% endif %}
+    {% else %}
+        {% if settings.production %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" integrity="sha256-2k1KVsNPRXxZOsXQ8aqcZ9GOOwmJTMoOB5o5Qp1d6/s=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css" integrity="sha256-iVhQxXOykHeL03K08zkxBGxDCLCuzRGGiTYf2FL6mLY=" crossorigin="anonymous" />
+        {% else %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" integrity="sha256-Ll4Z8mX5+0pGybXIES6J8YjUZUBFcQsJfS00wbXdbG8=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.css" integrity="sha256-EYSmiSz2daAX5Xq+m8lxGFf+qWABUgdCPUvU5X0vpI4=" crossorigin="anonymous" />
+        {% endif %}
+    {% endif %}
+    <link rel="stylesheet" href="styles/app.css" />
+</head>
+
+<body>
+
+    <div id="app">
+        <topmenu v-bind:boards="boards"></topmenu>
+        <div class="section">
+            <board v-if="defaultBoard" v-bind:id="defaultBoard"></board>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        window.__INITIAL_STATE__ = '{{ initialState | raw }}';
+        let initialState = JSON.parse(window.__INITIAL_STATE__);
+    </script>
+
+
+    {% if settings.localVendorAssets %}
+    <script defer src="vendor/font-awesome-5.0.6/all.js"></script>
+        {% if settings.production %}
+    <script src="vendor/vue-2.5.16/vue.min.js" integrity="sha256-TaLceMwjWRqe4yhbqPOJH6V7UGt5AvvdNfpaIXJWbFU=" crossorigin="anonymous"></script>
+    <script src="vendor/vue-router-3.0.1/vue-router.min.js" integrity="sha256-yEB9jUlD51i5kxJZlzgzfR6XmVKI76Nl1WRA1aqIilU=" crossorigin="anonymous"></script>
+    <script src="vendor/vue-resource-1.5.0/vue-resource.min.js" integrity="sha256-SKdOGI9oIPdHcwjFQg+eCwBdIWFjxiNhWFlU9Gt0o18=" crossorigin="anonymous"></script>
+    <script src="vendor/dragula-3.7.2/dragula.min.js" integrity="sha256-ug4bHfqHFAj2B5MESRxbLd3R3wdVMQzug2KHZqFEmFI=" crossorigin="anonymous"></script>
+        {% else %}
+    <script src="vendor/vue-2.5.16/vue.js" integrity="sha256-CMMTrj5gGwOAXBeFi7kNokqowkzbeL8ydAJy39ewjkQ=" crossorigin="anonymous"></script>
+    <script src="vendor/vue-router-3.0.1/vue-router.js" integrity="sha256-POlBNmX1CMDkfPMqbFqOxE8fGJyTT7tcwch5tvXZqVs=" crossorigin="anonymous"></script>
+    <script src="vendor/vue-resource-1.5.0/vue-resource.js" integrity="sha256-u+SbylOw7agiJqR0wFh8jQaFitiVWar14uiyiOOBVNc=" crossorigin="anonymous"></script>
+    <script src="vendor/dragula-3.7.2/dragula.js" integrity="sha256-rVf3H94DblhP4Z6wLSa2mpMwRS5qePBWykE6QWPOaO0=" crossorigin="anonymous"></script>
+        {% endif %}
+    {% else %}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        {% if settings.production %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js" integrity="sha256-TaLceMwjWRqe4yhbqPOJH6V7UGt5AvvdNfpaIXJWbFU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.1/vue-router.min.js" integrity="sha256-yEB9jUlD51i5kxJZlzgzfR6XmVKI76Nl1WRA1aqIilU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.0/vue-resource.min.js" integrity="sha256-SKdOGI9oIPdHcwjFQg+eCwBdIWFjxiNhWFlU9Gt0o18=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js" integrity="sha256-ug4bHfqHFAj2B5MESRxbLd3R3wdVMQzug2KHZqFEmFI=" crossorigin="anonymous"></script>
+        {% else %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js" integrity="sha256-CMMTrj5gGwOAXBeFi7kNokqowkzbeL8ydAJy39ewjkQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.1/vue-router.js" integrity="sha256-POlBNmX1CMDkfPMqbFqOxE8fGJyTT7tcwch5tvXZqVs=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.0/vue-resource.js" integrity="sha256-u+SbylOw7agiJqR0wFh8jQaFitiVWar14uiyiOOBVNc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js" integrity="sha256-rVf3H94DblhP4Z6wLSa2mpMwRS5qePBWykE6QWPOaO0=" crossorigin="anonymous"></script>
+        {% endif %}
+    {% endif %}
+
+    <!-- app section -->
+    <script src="scripts/mkanban.js"></script>
+    <script src="scripts/api.js"></script>
+    <script src="scripts/vue-topmenu.js"></script>
+    <script src="scripts/vue-board.js"></script>
+    <script src="scripts/vue-list.js"></script>
+    <script src="scripts/vue-card.js"></script>
+    <script src="scripts/vue-card-details.js"></script>
+    <script src="scripts/vue-app.js"></script>
+    <!-- app section -->
+
+</body>
+
+</html>
