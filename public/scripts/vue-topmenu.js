@@ -6,7 +6,7 @@ var mkanbanTopMenu = (function () {
 
     var template = function () {
         return `
-            <nav class="navbar is-light is-fixed-top is-unselectable" role="navigation" aria-label="main navigation">
+            <nav class="navbar is-light is-unselectable" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
                     <div class="navbar-item">
                         <p class="control">
