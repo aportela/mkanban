@@ -22,7 +22,7 @@ var mkanbanCardDetails = (function () {
                                 </div>
                                 <div class="field">
                                     <p class="control is-expanded has-icons-left">
-                                        <input class="input" type="date" placeholder="start date">
+                                        <input class="input" type="date" placeholder="start date" value="2018-04-12">
                                         <span class="icon is-small is-left">
                                             <i class="fas fa-calendar-alt"></i>
                                         </span>
@@ -33,7 +33,7 @@ var mkanbanCardDetails = (function () {
                                 </div>
                                 <div class="field">
                                     <p class="control is-expanded has-icons-left has-icons-right">
-                                    <input class="input is-success" type="date" placeholder="end date" value="05/04/2018">
+                                    <input class="input is-success" type="date" placeholder="end date">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-calendar-alt"></i>
                                     </span>
@@ -62,7 +62,7 @@ var mkanbanCardDetails = (function () {
                                 <button class="button is-link" v-on:click.prevent="editDescription = false;" v-bind:disabled="! description">Save</button>
                             </div>
                             <div class="control">
-                                <button class="button is-text" v-on:click.prevent="editDescription = false; description = null;" v-bind:disabled="! description">Cancel</button>
+                                <button class="button is-text" v-on:click.prevent="editDescription = false; description = null;">Cancel</button>
                             </div>
                         </div>
 
