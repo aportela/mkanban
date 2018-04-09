@@ -38,6 +38,9 @@
                 'name' => 'mkanban-api',
                 'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/api.log',
                 'level' => \Monolog\Logger::DEBUG
+            ],
+            'common' => [
+                'allowSignUp' => true
             ]
         ],
     ];

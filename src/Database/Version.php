@@ -26,7 +26,7 @@
                 '
             ),
             "PDO_MARIADB" => array(
-                    '
+                '
                     CREATE TABLE `VERSION` (
                         `num`	FLOAT NOT NULL UNIQUE,
                         `date`	TIMESTAMP NOT NULL,
@@ -41,8 +41,30 @@
 
         private $upgradeQueries = array(
             "PDO_SQLITE" => array(
+                "1.01" => array(
+                    '
+                        CREATE TABLE [USER] (
+                            [id] VARCHAR(36) UNIQUE NOT NULL PRIMARY KEY,
+                            [email] VARCHAR(255) UNIQUE NOT NULL,
+                            [password_hash] VARCHAR(60) NOT NULL,
+                            [nick] VARCHAR(255) UNIQUE NOT NULL,
+                            [avatar_url] VARCHAR(2048)
+                        );
+                    '
+                )
             ),
             "PDO_MARIADB" => array(
+                "1.01" => array(
+                    '
+                        CREATE TABLE [USER] (
+                            [id] VARCHAR(36) UNIQUE NOT NULL PRIMARY KEY,
+                            [email] VARCHAR(255) UNIQUE NOT NULL,
+                            [password_hash] VARCHAR(60) NOT NULL,
+                            [nick] VARCHAR(255) UNIQUE NOT NULL,
+                            [avatar_url] VARCHAR(2048)
+                        );
+                    '
+                )
             )
         );
 

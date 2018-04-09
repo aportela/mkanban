@@ -8,6 +8,7 @@ const bus = new Vue();
  */
 const routes = [
     { path: '/upgrade', name: 'upgrade', component: mkanbanUpgrade },
+    { path: '/auth', name: 'auth', component: mkanbanAuth },
     { path: '/home', name: 'home', component: mkanbanHome }
 ];
 
@@ -18,6 +19,53 @@ const router = new VueRouter({
     routes
 });
 
+
+/**
+ * parse vue-resource (custom) resource and return valid object for api-error component
+ * @param {*} r a valid vue-resource response object
+ */
+const getApiErrorDataFromResponse = function (r) {
+    var data = {
+        request: {
+            method: r.rMethod,
+            url: r.rUrl,
+            body: r.rBody
+        },
+        response: {
+            status: r.status,
+            statusText: r.statusText,
+            text: r.bodyText
+        }
+    };
+    data.request.headers = [];
+    for (var headerName in r.rHeaders.map) {
+        data.request.headers.push({ name: headerName, value: r.rHeaders.get(headerName) });
+    }
+    data.response.headers = [];
+    for (var headerName in r.headers.map) {
+        data.response.headers.push({ name: headerName, value: r.headers.get(headerName) });
+    }
+    return (data);
+};
+
+/**
+ * vue-resource interceptor for adding (on errors) custom get data function (used in api-error component) into response
+ */
+Vue.http.interceptors.push((request, next) => {
+    next((response) => {
+        if (!response.ok) {
+            response.rBody = request.body;
+            response.rUrl = request.url;
+            response.rMethod = request.method;
+            response.rHeaders = request.headers;
+            response.getApiErrorData = function () {
+                return (getApiErrorDataFromResponse(response));
+            };
+        }
+        return (response);
+    });
+});
+
 /**
  * main app component
  */
@@ -26,11 +74,33 @@ const app = new Vue({
     created: function () {
         console.log("[app]: created");
         if (!initialState.upgradeAvailable) {
-            console.log("[app] redirect to app home");
-            this.$router.push({ name: 'home' });
+            if (initialState.logged) {
+                console.log("[app] redirect to app");
+                this.$router.push({ name: 'home' });
+            } else {
+                console.log("[app] redirect to auth");
+                this.$router.push({ name: 'auth' });
+            }
         } else {
             console.log("[app] upgrade found");
             this.$router.push({ name: 'upgrade' });
+        }
+        var self = this;
+        bus.$on("signout", function() {
+            console.log("[app] signout received");
+            self.signOut();
+        });
+    },
+    methods: {
+        signOut: function() {
+            var self = this;
+            mkanbanAPI.user.signOut(function (response) {
+                if (response.ok) {
+                    self.$router.push({ name: 'auth' });
+                } else {
+                    // TODO: show error
+                }
+            });
         }
     }
 }).$mount('#app');

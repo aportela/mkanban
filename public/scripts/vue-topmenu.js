@@ -67,6 +67,14 @@ var mkanbanTopMenu = (function () {
                                 <span>Sync</span>
                             </p>
                         </a>
+                        <a class="navbar-item is-tab" v-on:click.prevent="signOut();">
+                            <p class="control">
+                                <span class="icon is-small">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </span>
+                                <span>Sign out</span>
+                            </p>
+                        </a>
                         <a class="navbar-item is-tab">
                             <p class="control">
                                 <span class="icon is-small">
@@ -99,6 +107,9 @@ var mkanbanTopMenu = (function () {
             console.log("[topmenu]: created");
         },
         methods: {
+            signOut: function() {
+                bus.$emit('signout');
+            },
             search: function () {
                 console.log("[topmenu]: searching: " + this.searchText);
                 this.isSearching = true;
