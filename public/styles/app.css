@@ -1,3 +1,13 @@
+.mk-margin-top-1rem
+{
+    margin-top: 1rem !important;
+}
+
+.mk-without-margin-bottom
+{
+    margin-bottom: 0rem !important;
+}
+
 .mk-card
 {
     cursor: pointer;

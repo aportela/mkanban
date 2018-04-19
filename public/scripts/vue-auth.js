@@ -12,7 +12,7 @@ var mkanbanAuth = (function () {
                         <h1 class="title has-text-centered"><span class="icon is-medium"><i class="fas fa-table" aria-hidden="true"></i></span> mKanban <span class="icon is-medium"><i class="fas fa-table" aria-hidden="true"></i></span></h1>
                         <h2 class="subtitle is-6 has-text-centered"><cite>...the poor man tr3ll0</cite></h2>
 
-                        <div class="tabs is-boxed is-toggle" v-if="allowSignUp">
+                        <div class="tabs is-boxed is-toggle mk-without-margin-bottom" v-if="allowSignUp">
                             <ul>
                                 <li v-bind:class="tab == 'signin' ? 'is-active': ''">
                                     <a v-on:click.prevent="tab = 'signin';">
@@ -80,7 +80,8 @@ var mkanbanAuth = (function () {
                                 </p>
                             </div>
                         </form>
-                        <p class="has-text-centered">
+
+                        <p class="has-text-centered mk-margin-top-1rem">
                             <a href="https://github.com/aportela/mkanban" target="_blank"><span class="icon is-small"><i class="fab fa-github"></i></span>Project page</a> | <a href="mailto:766f6964+github@gmail.com">by alex</a>
                         </p>
                     </div>
