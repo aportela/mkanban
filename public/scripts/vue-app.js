@@ -25,7 +25,7 @@ const router = new VueRouter({
  * @param {*} r a valid vue-resource response object
  */
 const getApiErrorDataFromResponse = function (r) {
-    var data = {
+    let data = {
         request: {
             method: r.rMethod,
             url: r.rUrl,
@@ -38,11 +38,11 @@ const getApiErrorDataFromResponse = function (r) {
         }
     };
     data.request.headers = [];
-    for (var headerName in r.rHeaders.map) {
+    for (let headerName in r.rHeaders.map) {
         data.request.headers.push({ name: headerName, value: r.rHeaders.get(headerName) });
     }
     data.response.headers = [];
-    for (var headerName in r.headers.map) {
+    for (let headerName in r.headers.map) {
         data.response.headers.push({ name: headerName, value: r.headers.get(headerName) });
     }
     return (data);
@@ -85,18 +85,16 @@ const app = new Vue({
             console.log("[app] upgrade found");
             this.$router.push({ name: 'upgrade' });
         }
-        var self = this;
-        bus.$on("signout", function() {
+        bus.$on("signout", () => {
             console.log("[app] signout received");
-            self.signOut();
+            this.signOut();
         });
     },
     methods: {
         signOut: function() {
-            var self = this;
-            mkanbanAPI.user.signOut(function (response) {
+            mkanbanAPI.user.signOut((response) => {
                 if (response.ok) {
-                    self.$router.push({ name: 'auth' });
+                    this.$router.push({ name: 'auth' });
                 } else {
                     // TODO: show error
                 }
