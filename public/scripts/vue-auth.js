@@ -9,8 +9,8 @@ var mkanbanAuth = (function () {
             <div class="container">
                 <div class="columns is-vcentered">
                     <div class="column is-4 is-offset-4">
-                        <h1 class="title has-text-centered"><span class="icon is-medium"><i class="fas fa-table" aria-hidden="true"></i></span> mKanban <span class="icon is-medium"><i class="fas fa-table" aria-hidden="true"></i></span></h1>
-                        <h2 class="subtitle is-6 has-text-centered"><cite>...the poor man tr3ll0</cite></h2>
+                        <h1 class="title has-text-centered"><span class="icon is-medium"><i class="fas fa-tasks"></i></span> mKanban <span class="icon is-medium"><i class="fas fa-tasks"></i></span></h1>
+                        <h2 class="subtitle is-6 has-text-centered"><cite>...some (not) like it tr3ll0</cite></h2>
 
                         <div class="tabs is-boxed is-toggle mk-without-margin-bottom" v-if="allowSignUp">
                             <ul>

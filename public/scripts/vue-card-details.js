@@ -112,8 +112,8 @@ var mkanbanCardDetails = (function () {
 
                         <article class="media" v-for="message in activityMessages" v-bind:key="message.id">
                             <div class="media-left">
-                                <figure class="image is-32x32">
-                                    <img src="https://bulma.io/images/placeholders/32x32.png" alt="Image">
+                                <figure class="image is-48x48">
+                                    <img src="https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-1-48.png" alt="Image">
                                 </figure>
                             </div>
                             <div class="media-content">
